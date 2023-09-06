@@ -28,7 +28,7 @@ class PatientDataStore
   def generate_csv
     {
       records: valid_records.map(&:to_csv),
-      errors: {summary: generate_summary}
+      summary: generate_summary
     }
   end
 
