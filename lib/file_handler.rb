@@ -11,7 +11,7 @@ class FileHandler
         member_id: row[:member_id],
         effective_date: row[:effective_date],
         expiry_date: row[:expiry_date],
-        phone_number: row[:phone_number],
+        phone_number: row[:phone_number]
       }
     end
 
@@ -26,9 +26,7 @@ class FileHandler
         csv << record.split(",")
       end
     end
-    
-    File.open("output.txt", "w") do |file|
-      file.write(datastore_output[:summary])
-    end
+
+    File.write("output.txt", datastore_output[:summary])
   end
 end

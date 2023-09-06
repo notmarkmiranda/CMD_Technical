@@ -28,11 +28,10 @@ RSpec.describe FileHandler do
       #   csv << ["another", "row"]
       #   # ...
       # end
-      
+
       expect(CSV).to receive(:open).with("records.csv", "w").and_yield(csv_double)
       expect(csv_double).to receive(:<<).exactly(3).times
-      expect(File).to receive(:open).with("output.txt", "w").and_yield(file_double)
-      expect(file_double).to receive(:write).with(generate_csv_from_datastore[:summary])
+      expect(File).to receive(:write).with("output.txt", generate_csv_from_datastore[:summary])
 
       described_class.export(generate_csv_from_datastore)
     end
