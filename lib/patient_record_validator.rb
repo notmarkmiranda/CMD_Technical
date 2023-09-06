@@ -2,7 +2,7 @@ require "date"
 
 module PatientRecordValidator
   attr_reader :errors
-
+  
   ATTRIBUTES = {
     presence: [
       :first_name,
@@ -50,8 +50,16 @@ module PatientRecordValidator
     ATTRIBUTES[:e164].each do |attr|
       attribute = send(attr)
       valid_format = E164_VALIDATION.match?(attribute)
-      @errors << "#{attr} is improperly formatted" unless valid_format
+      if valid_format
+        assign_phone_number(attr, attribute)
+      else
+        @errors << "#{attr} is improperly formatted" unless valid_format
+      end
     end
+  end
+
+  def assign_phone_number(attr, attribute)
+    @phone_number = attribute.split(/[^\d]/).join.rjust(11, "1")
   end
 
   def assign_date_attribute(date_string)

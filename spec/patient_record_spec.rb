@@ -11,20 +11,21 @@ RSpec.describe PatientRecord do
       member_id: "asdf1234",
       effective_date: "09/13/2023",
       expiry_date: "09/13/2024",
-      phone_number: "3038476953"
+      phone_number: "1(303)8476953"
     }
   end
 
   it "instantiates a record with all of the attributes" do
     patient_record = described_class.new(attributes)
 
+    patient_record.save
     expect(patient_record.first_name).to eq("Mark")
     expect(patient_record.last_name).to eq("Miranda")
     expect(patient_record.dob).to eq(Date.new(2023, 9, 13))
     expect(patient_record.member_id).to eq("asdf1234")
     expect(patient_record.effective_date).to eq(Date.new(2023, 9, 13))
     expect(patient_record.expiry_date).to eq(Date.new(2024, 9, 13))
-    expect(patient_record.phone_number).to eq("3038476953")
+    expect(patient_record.phone_number).to eq("13038476953")
   end
 
   it "returns true when valid_attributes exist" do
@@ -41,6 +42,7 @@ RSpec.describe PatientRecord do
 
   it "returns false when invalid phone_number format" do
     patient_record = described_class.new(attributes.merge(phone_number: "303847695"))
+    patient_record.save
 
     expect(patient_record.save).to eq(false)
     expect(patient_record.errors).to eq(["phone_number is improperly formatted"])
@@ -99,14 +101,16 @@ RSpec.describe PatientRecord do
   describe "#to_csv" do
     it "returns attributes in csv format" do
       patient_record = described_class.new(attributes)
+      patient_record.save
 
-      expect(patient_record.to_csv).to eq("Mark,Miranda,2023-09-13,asdf1234,2023-09-13,2024-09-13,3038476953")
+      expect(patient_record.to_csv).to eq("Mark,Miranda,2023-09-13,asdf1234,2023-09-13,2024-09-13,13038476953")
     end
 
     it "when there are some nil attributes" do
       patient_record = described_class.new(attributes.merge(expiry_date: nil))
+      patient_record.save
 
-      expect(patient_record.to_csv).to eq("Mark,Miranda,2023-09-13,asdf1234,2023-09-13,,3038476953")
+      expect(patient_record.to_csv).to eq("Mark,Miranda,2023-09-13,asdf1234,2023-09-13,,13038476953")
     end
   end
 end

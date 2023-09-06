@@ -80,8 +80,8 @@ RSpec.describe PatientDataStore do
       it "generates a csv of valid records & data for output text" do
         expected_return = {
           records: [
-            "Mark,Miranda,2023-09-13,asdf1234,2023-09-13,2024-09-13,3038476953",
-            "Salem,Miranda,2020-03-01,asdf1235,2023-09-13,2024-09-13,3038476954"
+            "Mark,Miranda,2023-09-13,asdf1234,2023-09-13,2024-09-13,13038476953",
+            "Salem,Miranda,2020-03-01,asdf1235,2023-09-13,2024-09-13,13038476954"
           ],
           summary:
             "2 valid record(s)\n1 invalid record(s).\nHere are the list of errors from the invalid records:\nfirst_name cannot be blank\nlast_name cannot be blank\ndob cannot be blank\nmember_id cannot be blank\neffective_date cannot be blank\nphone_number is improperly formatted\n"
