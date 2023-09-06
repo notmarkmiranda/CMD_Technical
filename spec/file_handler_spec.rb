@@ -13,7 +13,6 @@ RSpec.describe FileHandler do
   describe "#export" do
     it "exports 2 files" do
       csv_double = double("csv_double")
-      file_double = double("file_double")
 
       generate_csv_from_datastore = {
         records: [
