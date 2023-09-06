@@ -49,7 +49,7 @@ RSpec.describe PatientRecord do
   describe "valid attribute" do
     it "returns nil by default" do
       patient_record = described_class.new(attributes)
-      
+
       expect(patient_record.valid?).to eq(nil)
       expect(patient_record.valid?).not_to eq(false)
     end
@@ -98,14 +98,14 @@ RSpec.describe PatientRecord do
 
   describe "#to_csv" do
     it "returns attributes in csv format" do
-      patient_record = described_class.new(attributes)      
+      patient_record = described_class.new(attributes)
 
       expect(patient_record.to_csv).to eq("Mark,Miranda,2023-09-13,asdf1234,2023-09-13,2024-09-13,3038476953")
     end
 
     it "when there are some nil attributes" do
       patient_record = described_class.new(attributes.merge(expiry_date: nil))
-      
+
       expect(patient_record.to_csv).to eq("Mark,Miranda,2023-09-13,asdf1234,2023-09-13,,3038476953")
     end
   end

@@ -1,4 +1,4 @@
-require 'date'
+require "date"
 
 module PatientRecordValidator
   attr_reader :errors

@@ -1,8 +1,8 @@
 class PatientDataStore
   attr_reader :records
-  
+
   def initialize
-    @records = { valid: [], invalid: [] }
+    @records = {valid: [], invalid: []}
   end
 
   def add(record)
@@ -28,12 +28,12 @@ class PatientDataStore
   def generate_csv
     {
       records: valid_records.map(&:to_csv),
-      errors: { summary: generate_summary }
+      errors: {summary: generate_summary}
     }
   end
 
   private
-  
+
   def generate_summary
     <<~EOS
       #{valid_records.count} valid record(s)

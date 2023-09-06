@@ -9,18 +9,18 @@ RSpec.describe PatientDataStore do
     it "has no records on instantiation" do
       expect(data_store.valid_records).to be_empty
       expect(data_store.invalid_records).to be_empty
-    end  
+    end
 
     it "can add records" do
       patient_record = double("patient record", valid?: true, invalid?: false)
-      
+
       expect(data_store.add(patient_record)).to eq(patient_record)
       expect(data_store.valid_records).not_to be_empty
     end
   end
 
   describe "#generate_csv" do
-    let(:valid_records)  { [instance_double("patient_record", valid?: true, invalid?: false), instance_double("patient_record", valid?: true, invalid?: false)] }
+    let(:valid_records) { [instance_double("patient_record", valid?: true, invalid?: false), instance_double("patient_record", valid?: true, invalid?: false)] }
     let(:invalid_records) { [instance_double("patient_record", valid?: false, invalid?: true)] }
     let(:all_records) { valid_records + invalid_records }
 
@@ -47,7 +47,7 @@ RSpec.describe PatientDataStore do
     describe "csv generation" do
       let(:store) { described_class.new }
 
-      before do 
+      before do
         first_record = PatientRecord.new({
           last_name: "Miranda",
           first_name: "Mark",
@@ -68,7 +68,6 @@ RSpec.describe PatientDataStore do
           phone_number: "3038476954"
         })
 
-        
         valid_records = [first_record, second_record]
         invalid_record = [PatientRecord.new({})]
         all_records = valid_records + invalid_record
@@ -77,7 +76,7 @@ RSpec.describe PatientDataStore do
           store.add(record)
         end
       end
-      
+
       it "generates a csv of valid records & data for output text" do
         expected_return = {
           records: [
@@ -85,13 +84,11 @@ RSpec.describe PatientDataStore do
             "Salem,Miranda,2020-03-01,asdf1235,2023-09-13,2024-09-13,3038476954"
           ],
           errors: {
-            summary: 
+            summary:
             "2 valid record(s)\n1 invalid record(s).\nHere are the list of errors from the invalid records:\nfirst_name cannot be blank\nlast_name cannot be blank\ndob cannot be blank\nmember_id cannot be blank\neffective_date cannot be blank\nphone_number is improperly formatted\n"
           }
         }
-        
 
-        
         expect(store.generate_csv).to eq(expected_return)
       end
     end
