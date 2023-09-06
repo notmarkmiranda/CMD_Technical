@@ -23,12 +23,6 @@ RSpec.describe FileHandler do
         summary: "2 valid record(s)\n1 invalid record(s).\nHere are the list of errors from the invalid records:\nfirst_name cannot be blank\nlast_name cannot be blank\ndob cannot be blank\nmember_id cannot be blank\neffective_date cannot be blank\nphone_number is improperly formatted\n"
       }
 
-      # CSV.open("myfile.csv", "w") do |csv|
-      #   csv << ["row", "of", "CSV", "data"]
-      #   csv << ["another", "row"]
-      #   # ...
-      # end
-
       expect(CSV).to receive(:open).with("records.csv", "w").and_yield(csv_double)
       expect(csv_double).to receive(:<<).exactly(3).times
       expect(File).to receive(:write).with("output.txt", generate_csv_from_datastore[:summary])
