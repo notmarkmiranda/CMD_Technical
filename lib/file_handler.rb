@@ -5,13 +5,13 @@ class FileHandler
     results = []
     CSV.foreach(file, headers: true, header_converters: :symbol) do |row|
       results << {
-        first_name: row[:first_name],
-        last_name: row[:last_name],
-        dob: row[:dob],
-        member_id: row[:member_id],
-        effective_date: row[:effective_date],
-        expiry_date: row[:expiry_date],
-        phone_number: row[:phone_number]
+        first_name: row[:first_name]&.strip,
+        last_name: row[:last_name]&.strip,
+        dob: row[:dob]&.strip,
+        member_id: row[:member_id]&.strip,
+        effective_date: row[:effective_date]&.strip,
+        expiry_date: row[:expiry_date]&.strip,
+        phone_number: row[:phone_number]&.strip
       }
     end
 

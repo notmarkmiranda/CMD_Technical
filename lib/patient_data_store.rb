@@ -38,7 +38,7 @@ class PatientDataStore
     <<~EOS
       #{valid_records.count} valid record(s)
       #{invalid_records.count} invalid record(s).
-      Here are the list of errors from the invalid records:\n#{invalid_records.flat_map(&:errors).join("\n")}
+      Here are the list of errors from the invalid records:\n#{invalid_records.flat_map(&:errors).uniq.join("\n")}
     EOS
   end
 end
