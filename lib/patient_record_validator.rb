@@ -2,7 +2,7 @@ require "date"
 
 module PatientRecordValidator
   attr_reader :errors
-  
+
   ATTRIBUTES = {
     presence: [
       :first_name,

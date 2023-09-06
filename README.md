@@ -1,3 +1,69 @@
+# ReadMe
+
+Hi! This was an extremely fun technical challenge. I thoroughly enjoyed it!
+
+Just going over some technical things.
+Ruby version: 3.2.2
+RSpec version: 3.12.0
+StanardRB version 1.13.0 (because I don't like making decisions on Ruby style and will pass that ownership off to the gem owners (Test Double))
+
+To get this going and run tests:
+```bash
+$ bundle install
+$ rspec
+....................
+
+Finished in 0.01489 seconds (files took 0.14799 seconds to load)
+20 examples, 0 failures
+
+```
+
+To run it locally:
+```bash
+$ ruby lib/runner.rb input.csv # this is a copy of the originally included CSV
+
+output.txt & records.csv have been generated
+use `cat output.txt` or `cat records.csv` to view the files
+
+$ cat output.txt
+
+12 valid record(s)
+2 invalid record(s).
+Here are the list of errors from the invalid records:
+effective_date cannot be blank
+phone_number is improperly formatted
+
+$ cat records.csv
+
+first_name,last_name,dob,member_id,effective_date,expiry_date,phone_number
+Brent,Wilson,2019-01-01,349090,2019-09-30,2020-09-30,(303) 887 3456
+Nikola,Jokic,2019-02-02,890887,2019-09-30,2020-09-30,303-333-9987
+Baker,Mayfield,1988-01-04,349093,2019-09-30,2050-12-13,13039873345
+Serena,Williams,2019-04-04,jk 909009,2017-11-11,2050-12-14,444-555-9876
+Jake,Jabs,2019-01-06,349090,2019-09-30,2050-12-15,444-555-9877
+Mary,Poppins,2019-01-07,uu 90990,2019-09-30,2050-12-16,444-555-9878
+Sally,Jesse Rephael,1988-01-08,349097,2019-09-30,2050-12-17,444-555-9879
+Bruce,Springsteen,1988-01-09,234324,2019-09-30,"",444-555-9880
+Jason,Statham,1988-02-12,349099,2019-09-30,"",606-555-9886
+Lenny,Bruce,1988-01-11,349100,2019-09-30,"",202-555-9882
+Martin,Short,1988-01-12,349101,2019-09-30,"",404-555-9883
+Benny,Samson,1988-01-13,349102,2019-09-30,"",44425559884
+```
+
+## My Approach
+
+My thought was to keep everything separated. After reading the original readme (still in tact below), I drew out some ideas and check boxes to keep myself moving in the right direction.
+
+I started from the meatiest portion, the `PatientRecord` model. I happy pathed it without validations at first, then added validations, then extracted them to their own module. I then moved to the data store to move some reponsibility for generating the csv and separating the records by validity. From there I created a file handler to allow for reading / writing responsibilities. Then lastly was a runner file that pulled it all together. I was originally attempting to reach for a `rake` task, but it seemed like overkill to import it into a Ruby project when time was of the essence.
+
+
+## Things I might do next if there was more time
+
+- Make the validator more universal. It felt like I was recreating validations from ActiveRecord, which I've never properly given much thought to on how it's implemented, but the ability to check dates, phone numbers and other pieces of data.
+- Write and test a proper rake file to replace the runner.
+- Return the offending data that prevented records from being saved
+- Refactor the assignement of data that needed to be parsed / coerced. I think I have a littleb it of inconsistency between phone numbers and dates
+---
 # Original Readme
 ## Goal
 
