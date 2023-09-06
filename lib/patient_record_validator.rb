@@ -1,3 +1,5 @@
+require "date"
+
 module PatientRecordValidator
   attr_reader :errors
 
@@ -26,7 +28,7 @@ module PatientRecordValidator
     @errors = []
     check_attributes
 
-    @errors.empty?
+    @valid = @errors.empty?
   end
 
   private
