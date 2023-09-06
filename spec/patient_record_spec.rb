@@ -5,8 +5,8 @@ require "date"
 RSpec.describe PatientRecord do
   let(:attributes) do
     {
-      last_name: "Miranda",
       first_name: "Mark",
+      last_name: "Miranda",
       dob: "09/13/2023",
       member_id: "asdf1234",
       effective_date: "09/13/2023",
@@ -14,6 +14,7 @@ RSpec.describe PatientRecord do
       phone_number: "3038476953"
     }
   end
+
   it "instantiates a record with all of the attributes" do
     patient_record = described_class.new(attributes)
 
@@ -45,6 +46,30 @@ RSpec.describe PatientRecord do
     expect(patient_record.errors).to eq(["phone_number is improperly formatted"])
   end
 
+  describe "valid attribute" do
+    it "returns nil by default" do
+      patient_record = described_class.new(attributes)
+      
+      expect(patient_record.valid?).to eq(nil)
+      expect(patient_record.valid?).not_to eq(false)
+    end
+
+    it "returns false after a record has been saved with invalid attributes" do
+      patient_record = described_class.new(attributes.merge(first_name: ""))
+
+      patient_record.save
+      expect(patient_record.valid?).to eq(false)
+      expect(patient_record.valid?).not_to eq(nil)
+    end
+
+    it "returns true after a record has been saved with valid attributes" do
+      patient_record = described_class.new(attributes)
+
+      patient_record.save
+      expect(patient_record.valid?).to eq(true)
+    end
+  end
+
   describe "date attributes" do
     it "can assign date attributes when passed in as MM/DD/YYYY" do
       patient_record = described_class.new(attributes.merge(dob: "12/31/2010"))
@@ -68,6 +93,20 @@ RSpec.describe PatientRecord do
       patient_record = described_class.new(attributes.merge(dob: "1-31-88"))
 
       expect(patient_record.dob).to eq(Date.new(1988, 1, 31))
+    end
+  end
+
+  describe "#to_csv" do
+    it "returns attributes in csv format" do
+      patient_record = described_class.new(attributes)      
+
+      expect(patient_record.to_csv).to eq("Mark,Miranda,2023-09-13,asdf1234,2023-09-13,2024-09-13,3038476953")
+    end
+
+    it "when there are some nil attributes" do
+      patient_record = described_class.new(attributes.merge(expiry_date: nil))
+      
+      expect(patient_record.to_csv).to eq("Mark,Miranda,2023-09-13,asdf1234,2023-09-13,,3038476953")
     end
   end
 end
