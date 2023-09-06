@@ -3,7 +3,6 @@ require "./lib/patient_record_validator"
 class PatientRecord
   ATTRS = [:first_name, :last_name, :dob, :member_id, :effective_date, :expiry_date, :phone_number]
   attr_reader(*ATTRS)
-  # attr_reader :first_name, :last_name, :dob, :member_id, :effective_date, :expiry_date, :phone_number
   include PatientRecordValidator
 
   def initialize(attributes)
